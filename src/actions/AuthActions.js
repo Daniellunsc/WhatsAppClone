@@ -69,6 +69,8 @@ const AUTH_USER_SUCESS = (dispatch) => {
         type: 'AUTH_USER_SUCESS'
         }
     )
+
+    Actions.Main();
 }
 
 
