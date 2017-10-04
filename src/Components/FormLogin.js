@@ -1,15 +1,27 @@
 import React, {Component} from 'react';
-import {Text, View, TextInput, Button,  TouchableHighlight, Image } from 'react-native';
+import {Text, View, TextInput, Button,  TouchableHighlight, Image, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux'
-import { CHANGE_EMAIL, CHANGE_PWD, AUTH_USER } from '../actions/AuthActions'
+import { _CHANGE_EMAIL, _CHANGE_PWD, _AUTH_USER } from '../actions/AuthActions'
 
 class formLogin extends Component  {
 
     _auth_user(){
         const {email, senha} = this.props;
 
-        this.props.AUTH_USER({email, senha});
+        this.props._AUTH_USER({email, senha});
+    }
+
+    renderBtnAcessar(){
+
+        if(this.props.loadingLogin){
+            return(
+                <ActivityIndicator size="large"/>
+            )
+        }
+        return (
+            <Button title="Acessar" color='#115E54' onPress={()=> this._auth_user()}/>
+        )
     }
 
     render(){
@@ -25,7 +37,7 @@ class formLogin extends Component  {
                         style={{fontSize:20, height:45}}
                         placeholder="E-mail"
                         placeholderTextColor="#fff"  
-                        onChangeText = {texto => this.props.CHANGE_EMAIL(texto)}/>
+                        onChangeText = {texto => this.props._CHANGE_EMAIL(texto)}/>
 
                         <TextInput 
                         secureTextEntry={true}
@@ -33,7 +45,7 @@ class formLogin extends Component  {
                         style={{fontSize:20, height:45}}
                         placeholder="Senha"
                         placeholderTextColor="#fff"   
-                        onChangeText = {texto => this.props.CHANGE_PWD(texto)}/>
+                        onChangeText = {texto => this.props._CHANGE_PWD(texto)}/>
 
                     <Text style={{color:'#ff0000', fontSize:18}}> {this.props.authError}</Text>
 
@@ -43,7 +55,7 @@ class formLogin extends Component  {
 
                     </View>
                     <View style={{flex:2}}>
-                        <Button title="Acessar" color='#115E54' onPress={()=> this._auth_user()}/>
+                        {this.renderBtnAcessar()} 
                     </View>
                 </View>
             </Image>
@@ -56,7 +68,8 @@ const mapStateToprops = state => (
         email: state.AuthReducer.email,
         senha: state.AuthReducer.senha,
         authError: state.AuthReducer.authError,
+        loadingLogin: state.AuthReducer.loadingLogin,
     }
 )
 
-export default connect(mapStateToprops, {CHANGE_EMAIL, CHANGE_PWD, AUTH_USER})(formLogin)
+export default connect(mapStateToprops, {_CHANGE_EMAIL, _CHANGE_PWD, _AUTH_USER})(formLogin)

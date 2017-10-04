@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Text, View, TextInput, Button, Image} from 'react-native';
+import {Text, View, TextInput, Button, Image, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
-import { CHANGE_EMAIL,
-         CHANGE_PWD,
-         CHANGE_NAME,
-         REGISTER_USER } from '../actions/AuthActions'
+import { _CHANGE_EMAIL,
+         _CHANGE_PWD,
+         _CHANGE_NAME,
+         _REGISTER_USER } from '../actions/AuthActions'
 
 class FormCadastro extends Component {
 
@@ -12,7 +12,17 @@ class FormCadastro extends Component {
 
         const { nome, email, senha } = this.props;
 
-        this.props.REGISTER_USER({nome, email, senha});
+        this.props._REGISTER_USER({nome, email, senha});
+    }
+
+    renderBtnCadastro(){
+        if(this.props.loadingCadastro)
+        {
+            return(<ActivityIndicator size="large" />)
+        }
+        return(
+            <Button title="Cadastrar" color="#115E54" onPress={()=> this._cadastraUsuario()} />
+        )
     }
 
     render(){
@@ -25,7 +35,7 @@ class FormCadastro extends Component {
                         placeholder="Nome"
                         placeholderTextColor="#fff"  
                         style={{fontSize:20, height:45}}
-                        onChangeText={texto => this.props.CHANGE_NAME(texto)}/>
+                        onChangeText={texto => this.props._CHANGE_NAME(texto)}/>
 
                         <TextInput 
                         
@@ -33,7 +43,7 @@ class FormCadastro extends Component {
                         placeholder="Email"
                         placeholderTextColor="#fff"   
                         style={{fontSize:20, height:45}}
-                        onChangeText={texto => this.props.CHANGE_EMAIL(texto)}/>
+                        onChangeText={texto => this.props._CHANGE_EMAIL(texto)}/>
 
                         <TextInput 
 
@@ -42,13 +52,13 @@ class FormCadastro extends Component {
                         placeholder="Senha"
                         placeholderTextColor="#fff"   
                         style={{fontSize:20, height:45}}
-                        onChangeText={texto => this.props.CHANGE_PWD(texto)}/>
+                        onChangeText={texto => this.props._CHANGE_PWD(texto)}/>
 
                         <Text style={{color:'#ff0000', fontSize:18}}> {this.props.erroCadastro}</Text>
                     </View>
 
                     <View style = {{flex:1}}>
-                        <Button title="Cadastrar" color="#115E54" onPress={()=> this._cadastraUsuario()} />
+                        {this.renderBtnCadastro()}
                     </View>
                 </View>
             </Image>
@@ -62,11 +72,12 @@ const mapStateToProps = state => (
         senha: state.AuthReducer.senha,
         nome: state.AuthReducer.nome,
         erroCadastro: state.AuthReducer.erroCadastro,
+        loadingCadastro: state.AuthReducer.loadingCadastro,
     }
 )
 
 
-export default connect(mapStateToProps,{ CHANGE_NAME,
-                                         CHANGE_EMAIL,
-                                         CHANGE_PWD,
-                                         REGISTER_USER })(FormCadastro)
+export default connect(mapStateToProps,{ _CHANGE_NAME,
+                                         _CHANGE_EMAIL,
+                                         _CHANGE_PWD,
+                                         _REGISTER_USER })(FormCadastro)

@@ -1,31 +1,46 @@
 import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux'
 import b64 from 'base-64';
+import { CHANGE_EMAIL,
+         CHANGE_PWD,
+         CHANGE_NAME,
+         REGISTER_USER,
+         REGISTER_USER_SUCCESS,
+         REGISTER_USER_ERROR,
+         AUTH_USER,
+         AUTH_USER_SUCESS,
+         AUTH_USER_FAIL,
+         LOADING_LOGIN,
+         LOADING_REGISTER } from './types'
 
-export const CHANGE_EMAIL = (texto) => {
+export const _CHANGE_EMAIL = (texto) => {
     return {
-        type: 'CHANGE_EMAIL',
+        type: CHANGE_EMAIL,
         payload: texto
     }
 }
 
-export const CHANGE_PWD = (texto) => {
+export const _CHANGE_PWD = (texto) => {
     return {
-        type: 'CHANGE_PWD',
+        type: CHANGE_PWD,
         payload: texto
     }
 }
 
-export const CHANGE_NAME = (texto) => {
+export const _CHANGE_NAME = (texto) => {
     return {
-        type: 'CHANGE_NAME',
+        type: CHANGE_NAME,
         payload: texto
     }
 }
 
-export const REGISTER_USER = ({nome, email, senha}) => {
+export const _REGISTER_USER = ({nome, email, senha}) => {
     
     return dispatch => {
+
+        dispatch({
+            type: LOADING_REGISTER
+        })
         
         firebase.auth().createUserWithEmailAndPassword(email, senha)
         .then(user => {
@@ -35,38 +50,42 @@ export const REGISTER_USER = ({nome, email, senha}) => {
             let emailB64 = b64.encode(email);
 
             firebase.database().ref(`/contatos/${emailB64}`)
-                .push({nome}).then(value => REGISTER_USER_SUCCESS(dispatch));
+                .push({nome}).then(value => _REGISTER_USER_SUCCESS(dispatch));
         })
-        .catch(erro => REGISTER_USER_ERROR(erro, dispatch));
+        .catch(erro => _REGISTER_USER_ERROR(erro, dispatch));
 
     }
     
 }
 
-const REGISTER_USER_SUCCESS = (dispatch) => {
-    dispatch({ type: 'REGISTER_USER_SUCCESS' });
+const _REGISTER_USER_SUCCESS = (dispatch) => {
+    dispatch({ type: REGISTER_USER_SUCCESS });
 
     Actions.Welcome();
 }
 
-const REGISTER_USER_ERROR = (error, dispatch) => {
-    dispatch({ type: 'REGISTER_USER_ERROR', payload: error.message });
+const _REGISTER_USER_ERROR = (error, dispatch) => {
+    dispatch({ type: REGISTER_USER_ERROR, payload: error.message });
 }
 
-export const AUTH_USER = ({email, senha}) => {
+export const _AUTH_USER = ({email, senha}) => {
     return dispatch => {
 
+        dispatch({
+            type: LOADING_LOGIN
+        })
+
         firebase.auth().signInWithEmailAndPassword(email, senha)
-            .then(value => AUTH_USER_SUCESS(dispatch))
-            .catch(error => AUTH_USER_FAIL(error, dispatch));
+            .then(value => _AUTH_USER_SUCESS(dispatch))
+            .catch(error => _AUTH_USER_FAIL(error, dispatch));
 
     }
 }
 
-const AUTH_USER_SUCESS = (dispatch) => {
+const _AUTH_USER_SUCESS = (dispatch) => {
     dispatch (
         {
-        type: 'AUTH_USER_SUCESS'
+        type: AUTH_USER_SUCESS
         }
     )
 
@@ -74,10 +93,10 @@ const AUTH_USER_SUCESS = (dispatch) => {
 }
 
 
-const AUTH_USER_FAIL = (error, dispatch) => {
+const _AUTH_USER_FAIL = (error, dispatch) => {
     dispatch (
         {
-        type: 'AUTH_USER_FAIL',
+        type: AUTH_USER_FAIL,
         payload: error.message
         }
     )
