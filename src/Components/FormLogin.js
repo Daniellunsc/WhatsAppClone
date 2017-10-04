@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, TextInput, Button,  TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux'
+import { CHANGE_EMAIL, CHANGE_PWD } from '../actions/AuthActions'
 
 const formLogin = props => 
 {
@@ -12,8 +13,18 @@ const formLogin = props =>
                     <Text style={{fontSize:25}}>WhatsApp Clone</Text>
                 </View>
                 <View style={{flex:2}}>
-                    <TextInput value={props.email} style={{fontSize:20, height:45}} placeholder="E-mail"/>
-                    <TextInput value={props.email} style={{fontSize:20, height:45}} placeholder="Senha"/>
+
+                    <TextInput value={props.email} 
+                    style={{fontSize:20, height:45}}
+                    placeholder="E-mail"
+                    onChangeText = {texto => props.CHANGE_EMAIL(texto)}/>
+
+                    <TextInput 
+                    value={props.senha}
+                    style={{fontSize:20, height:45}}
+                    placeholder="Senha" 
+                    onChangeText = {texto => props.CHANGE_PWD(texto)}/>
+
                 <TouchableHighlight onPress={() => Actions.formCadastro() }>
                     <Text style={{ fontSize: 20 }}>Ainda não tem cadastro? Cadastre-se</Text>
                 </TouchableHighlight>
@@ -27,9 +38,9 @@ const formLogin = props =>
 
 const mapStateToProps = state => (
     {
-        email: state.AutenticacaoReducer.email,
-        senha: state.AutenticacaoReducer.senha
+        email: state.AuthReducer.email,
+        senha: state.AuthReducer.senha
     }
 )
 
-export default connect(mapStateToProps, null)(formLogin)
+export default connect(mapStateToProps, {CHANGE_EMAIL, CHANGE_PWD})(formLogin)

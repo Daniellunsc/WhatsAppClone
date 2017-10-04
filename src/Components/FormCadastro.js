@@ -20,9 +20,9 @@ const FormCadastro = props => {
 
 const mapStateToProps = state => (
     {
-        email: state.AutenticacaoReducer.email,
-        senha: state.AutenticacaoReducer.senha,
-        nome: state.AutenticacaoReducer.nome
+        email: state.AuthReducer.email,
+        senha: state.AuthReducer.senha,
+        nome: state.AuthReducer.nome
     }
 )
 
