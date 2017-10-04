@@ -23,7 +23,7 @@ export default (state = INITIAL_STATE, action) => {
         }
         case 'REGISTER_USER_SUCCESS':
         return {
-            ...state, erroCadastro: ''
+            ...state, senha: '', nome: '', erroCadastro: ''
         }
         case 'REGISTER_USER_ERROR':
             return {
