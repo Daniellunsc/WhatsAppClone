@@ -11,3 +11,10 @@ export const CHANGE_PWD = (texto) => {
         payload: texto
     }
 }
+
+export const CHANGE_NAME = (texto) => {
+    return {
+        type: 'CHANGE_NAME',
+        payload: texto
+    }
+}

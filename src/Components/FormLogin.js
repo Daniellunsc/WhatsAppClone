@@ -20,6 +20,7 @@ const formLogin = props =>
                     onChangeText = {texto => props.CHANGE_EMAIL(texto)}/>
 
                     <TextInput 
+                    secureTextEntry={true}
                     value={props.senha}
                     style={{fontSize:20, height:45}}
                     placeholder="Senha" 

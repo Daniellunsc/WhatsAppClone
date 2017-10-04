@@ -16,6 +16,10 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state, senha: action.payload
             }
+        case 'CHANGE_NAME':
+            return {
+            ...state, nome: action.payload
+        }
     }
     return state;
 }
