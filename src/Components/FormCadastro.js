@@ -1,51 +1,72 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Text, View, TextInput, Button, Image} from 'react-native';
 import {connect} from 'react-redux';
-import { CHANGE_EMAIL, CHANGE_PWD, CHANGE_NAME } from '../actions/AuthActions'
+import { CHANGE_EMAIL,
+         CHANGE_PWD,
+         CHANGE_NAME,
+         REGISTER_USER } from '../actions/AuthActions'
 
-const FormCadastro = props => {
-    return(
-        <Image style={{flex:1, width: null}} source={require('../imgs/bg.png')}>
-            <View style = {{flex:1, padding:10}}>
-                <View style = {{flex:4, justifyContent: 'center'}}>
-                    <TextInput 
-                    value={props.nome} 
-                    placeholder="Nome"  
-                    style={{fontSize:20, height:45}}
-                    onChangeText={texto => props.CHANGE_NAME(texto)}/>
+class FormCadastro extends Component {
 
-                    <TextInput 
-                    
-                    value={props.email} 
-                    placeholder="Email" 
-                    style={{fontSize:20, height:45}}
-                    onChangeText={texto => props.CHANGE_EMAIL(texto)}/>
+    _cadastraUsuario(){
 
-                    <TextInput 
+        const { nome, email, senha } = this.props;
 
-                    secureTextEntry={true}
-                    value={props.senha} 
-                    placeholder="Senha" 
-                    style={{fontSize:20, height:45}}
-                    onChangeText={texto => props.CHANGE_PWD(texto)}/>
+        this.props.REGISTER_USER({nome, email, senha});
+    }
 
+    render(){
+        return(
+            <Image style={{flex:1, width: null}} source={require('../imgs/bg.png')}>
+                <View style = {{flex:1, padding:10}}>
+                    <View style = {{flex:4, justifyContent: 'center'}}>
+                        <TextInput 
+                        value={this.props.nome} 
+                        placeholder="Nome"
+                        placeholderTextColor="#fff"  
+                        style={{fontSize:20, height:45}}
+                        onChangeText={texto => this.props.CHANGE_NAME(texto)}/>
+
+                        <TextInput 
+                        
+                        value={this.props.email} 
+                        placeholder="Email"
+                        placeholderTextColor="#fff"   
+                        style={{fontSize:20, height:45}}
+                        onChangeText={texto => this.props.CHANGE_EMAIL(texto)}/>
+
+                        <TextInput 
+
+                        secureTextEntry={true}
+                        value={this.props.senha} 
+                        placeholder="Senha"
+                        placeholderTextColor="#fff"   
+                        style={{fontSize:20, height:45}}
+                        onChangeText={texto => this.props.CHANGE_PWD(texto)}/>
+
+                        <Text style={{color:'#ff0000', fontSize:18}}> {this.props.erroCadastro}</Text>
+                    </View>
+
+                    <View style = {{flex:1}}>
+                        <Button title="Cadastrar" color="#115E54" onPress={()=> this._cadastraUsuario()} />
+                    </View>
                 </View>
-
-                <View style = {{flex:1}}>
-                    <Button title="Cadastrar" color="#115E54" onPress={()=>false} />
-                </View>
-            </View>
-        </Image>
-    );
+            </Image>
+        );
+    }
 }
 
 const mapStateToProps = state => (
     {
         email: state.AuthReducer.email,
         senha: state.AuthReducer.senha,
-        nome: state.AuthReducer.nome
+        nome: state.AuthReducer.nome,
+        erroCadastro: state.AuthReducer.erroCadastro,
     }
 )
 
 
-export default connect(mapStateToProps, {CHANGE_NAME, CHANGE_EMAIL, CHANGE_PWD})(FormCadastro)
+export default connect(mapStateToProps,{ CHANGE_NAME,
+                                         CHANGE_EMAIL,
+                                         CHANGE_PWD,
+                                         REGISTER_USER })(FormCadastro)

@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+
 export const CHANGE_EMAIL = (texto) => {
     return {
         type: 'CHANGE_EMAIL',
@@ -17,4 +19,24 @@ export const CHANGE_NAME = (texto) => {
         type: 'CHANGE_NAME',
         payload: texto
     }
+}
+
+export const REGISTER_USER = ({nome, email, senha}) => {
+    
+    return dispatch => {
+        
+        firebase.auth().createUserWithEmailAndPassword(email, senha)
+        .then(user => UserSucess(dispatch))
+        .catch(erro => UserFail(erro, dispatch));
+
+    }
+    
+}
+
+const UserSucess = (dispatch) => {
+    dispatch({ type: 'REGISTER_USER_SUCCESS' });
+}
+
+const UserFail = (error, dispatch) => {
+    dispatch({ type: 'REGISTER_USER_ERROR', payload: error.message });
 }

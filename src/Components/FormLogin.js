@@ -11,24 +11,26 @@ const formLogin = props =>
             <Image style={{flex:1, width: null}} source={require('../imgs/bg.png')}>
                 <View style={{ flex:1, padding:10}}>
                     <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-                        <Text style={{fontSize:25}}>WhatsApp Clone</Text>
+                        <Text style={{fontSize:25, color:"#fff"}}>WhatsApp Clone</Text>
                     </View>
                     <View style={{flex:2}}>
 
                         <TextInput value={props.email} 
                         style={{fontSize:20, height:45}}
                         placeholder="E-mail"
+                        placeholderTextColor="#fff"  
                         onChangeText = {texto => props.CHANGE_EMAIL(texto)}/>
 
                         <TextInput 
                         secureTextEntry={true}
                         value={props.senha}
                         style={{fontSize:20, height:45}}
-                        placeholder="Senha" 
+                        placeholder="Senha"
+                        placeholderTextColor="#fff"   
                         onChangeText = {texto => props.CHANGE_PWD(texto)}/>
 
                     <TouchableHighlight onPress={() => Actions.formCadastro() }>
-                        <Text style={{ fontSize: 20 }}>Ainda não tem cadastro? Cadastre-se</Text>
+                        <Text style={{ fontSize: 20, color:"#fff" }}>Ainda não tem cadastro? Cadastre-se</Text>
                     </TouchableHighlight>
                     </View>
                     <View style={{flex:2}}>
