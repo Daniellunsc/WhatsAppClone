@@ -18,21 +18,21 @@ export const _CHANGE_ADD_CONTACT_EMAIL = texto => {
 export const _ADD_CONTACT = email => {
 
     return dispatch => {
-        let emailB64 = b64.encode(email);
+        email_lower_case = email.toLowerCase();
+        let emailB64 = b64.encode(email_lower_case);
         firebase.database().ref(`/contatos/${emailB64}`)
             .once('value')
             .then(snapshot => {
                 if(snapshot.val()){
                         
                     const dadosUsuario = _.first(_.values(snapshot.val()));
-                    console.log(dadosUsuario);
 
                     const {currentUser} = firebase.auth();
-                    let emailUserB64 = b64.encode(currentUser.email);
+                    let emailUserB64 = b64.encode(currentUser.email.toLowerCase());
 
                     firebase.database()
                         .ref(`/usuario_contatos/${emailUserB64}`)
-                        .push({email, nome: dadosUsuario.nome})
+                        .push({email: email.toLowerCase(), nome: dadosUsuario.nome})
                         .then(() => _ADD_CONTACT_SUCCESS(dispatch))
                         .catch(erro=> _ADD_CONTACT_ERROR(error.message, dispatch))
                 } 

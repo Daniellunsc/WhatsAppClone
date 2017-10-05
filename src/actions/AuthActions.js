@@ -46,8 +46,9 @@ export const _REGISTER_USER = ({nome, email, senha}) => {
         .then(user => {
 
             //user.sendEmailVerification();
-            
-            let emailB64 = b64.encode(email);
+            email_lower_case = email.toLowerCase();
+                        
+            let emailB64 = b64.encode(email_lower_case);
 
             firebase.database().ref(`/contatos/${emailB64}`)
                 .push({nome}).then(value => _REGISTER_USER_SUCCESS(dispatch));
