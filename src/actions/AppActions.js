@@ -24,7 +24,6 @@ export const _ADD_CONTACT = email => {
                 .then(snapshot => {
                     if(snapshot.val()){
                         
-                        console.log(email) 
                         const {currentUser} = firebase.auth();
                         let emailUserB64 = b64.encode(currentUser.email);
 
