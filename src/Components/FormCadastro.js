@@ -54,7 +54,7 @@ class FormCadastro extends Component {
                         style={{fontSize:20, height:45}}
                         onChangeText={texto => this.props._CHANGE_PWD(texto)}/>
 
-                        <Text style={{color:'#ff0000', fontSize:18}}> {this.props.erroCadastro}</Text>
+                        <Text style={{color:'#ff0000', fontSize:18, backgroundColor: 'transparent'}}> {this.props.erroCadastro}</Text>
                     </View>
 
                     <View style = {{flex:1}}>

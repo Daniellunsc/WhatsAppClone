@@ -29,7 +29,7 @@ class formLogin extends Component  {
             <Image style={{flex:1, width: null}} source={require('../imgs/bg.png')}>
                 <View style={{ flex:1, padding:10}}>
                     <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-                        <Text style={{fontSize:25, color:"#fff"}}>WhatsApp Clone</Text>
+                        <Text style={{fontSize:25, color:"#fff", backgroundColor: 'transparent'}}>WhatsApp Clone</Text>
                     </View>
                     <View style={{flex:2}}>
 
@@ -47,10 +47,10 @@ class formLogin extends Component  {
                         placeholderTextColor="#fff"   
                         onChangeText = {texto => this.props._CHANGE_PWD(texto)}/>
 
-                    <Text style={{color:'#ff0000', fontSize:18}}> {this.props.authError}</Text>
+                    <Text style={{color:'#ff0000', fontSize:18, backgroundColor: 'transparent'}}> {this.props.authError}</Text>
 
-                    <TouchableHighlight onPress={() => Actions.formCadastro() }>
-                        <Text style={{ fontSize: 20, color:"#fff" }}>Ainda não tem cadastro? Cadastre-se</Text>
+                    <TouchableHighlight style={{backgroundColor: 'transparent'}} onPress={() => Actions.formCadastro() }>
+                        <Text style={{ fontSize: 20, color:"#fff", backgroundColor: 'transparent' }}>Ainda não tem cadastro? Cadastre-se</Text>
                     </TouchableHighlight>
 
                     </View>
