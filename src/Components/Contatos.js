@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {View, Text, ListView} from 'react-native';
+import {View, Text, ListView, TouchableHighlight} from 'react-native';
 import {connect} from 'react-redux'
 import { _CONTACT_USER_FETCH } from '../actions/AppActions'
+import {Actions} from 'react-native-router-flux'
 import _ from 'lodash'
 
 class Contatos extends Component { 
@@ -26,21 +27,23 @@ class Contatos extends Component {
         console.log(this.fonteDeDados)
     }
 
+    renderRow(contato) {
+        return (
+            <TouchableHighlight onPress={()=> Actions.conversa() }>
+                <View style={{flex:1, padding:20, borderBottomWidth:1, color: '#CCC'}}> 
+                    <Text style={{fontSize:20}}>{contato.nome}</Text>
+                    <Text style={{fontSize:18}}>{contato.email}</Text>
+                </View>
+            </TouchableHighlight>
+        )
+    }
+
     render() {
         return (
             <ListView
                 enableEmptySections 
                 dataSource={this.fonteDeDados}
-                renderRow={data => (
-                    <View style={{flex:1, padding:20, borderBottomWidth:1, color: '#CCC'}}> 
-                        
-                        <Text style={{fontSize:20}}>{data.nome}</Text>
-                        <Text style={{fontSize:18}}>{data.email}</Text>
-
-                    </View>
-                        )
-                    
-                }
+                renderRow={data => this.renderRow(data)}
                 >
             </ListView>
         )
