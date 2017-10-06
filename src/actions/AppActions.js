@@ -4,11 +4,9 @@ import _ from 'lodash';
 
 import { 
     CHANGE_ADD_CONTACT_EMAIL,
-    ADD_CONTACT_ERROR, ADD_CONTACT_SUCCESS } from './types'
+    ADD_CONTACT_ERROR, ADD_CONTACT_SUCCESS, LIST_CONTACT_USER } from './types'
 
 export const _CHANGE_ADD_CONTACT_EMAIL = texto => {
-    console.log('chegamos aqui');
-    console.log(texto)
     return {
         type: CHANGE_ADD_CONTACT_EMAIL,
         payload: texto
@@ -72,3 +70,16 @@ export const _ENABLE_ADD_CONTACT = () => (
         payload: false
     }
 )
+
+export const _CONTACT_USER_FETCH = () => {
+    const {currentUser} = firebase.auth();
+
+    return (dispatch) => {
+        let email = b64.encode(currentUser.email.toLowerCase());
+
+        firebase.database().ref(`/usuario_contatos/${email}`)
+            .on("value", snapshot => {
+                dispatch({type: LIST_CONTACT_USER, payload: snapshot.val()})
+            })
+    }
+}
