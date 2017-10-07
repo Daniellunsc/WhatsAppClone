@@ -16,7 +16,7 @@ export default props => (
             <Scene key='Welcome' component={Welcome} title="Welcome"  hideNavBar={true} />
             <Scene key='Main' component={Main} title="Main"  hideNavBar={true}/>
             <Scene key='AdicionarContato' component={AdicionarContato} title="Adicionar Contato"  hideNavBar={false}/>
-            <Scene key='conversa' component={Conversa} title="Conversa"  hideNavBar={false}/>
+            <Scene key='conversa' component={Conversa}  hideNavBar={false}/>
         </Scene>
     </Router>
 );
