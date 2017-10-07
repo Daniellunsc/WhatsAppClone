@@ -8,7 +8,10 @@ import {
     ADD_CONTACT_SUCCESS,
     LIST_CONTACT_USER,
     MODIFY_MESSAGE,
-    SEND_MESSAGE } from './types'
+    SEND_MESSAGE,
+    LIST_CHAT_USER, 
+    CLEAR_TEXT, 
+    LIST_CHATS_USER } from './types'
 
 export const _CHANGE_ADD_CONTACT_EMAIL = texto => {
     return {
@@ -99,13 +102,15 @@ export const _SEND_MESSAGE = (mensagem, contatoNome, contatoEmail) => {
     const {currentUser} = firebase.auth();
     const userEmail = currentUser.email.toLowerCase();
 
-    console.log(userEmail);
-    console.log(contatoEmail);
+   
+    
 
     return dispatch => {
+        
+        dispatch({type: CLEAR_TEXT})
 
         const UserEmailB64 = b64.encode(userEmail)
-        const contatoEmailB64 = b64.encode(contatoEmail)
+        const contatoEmailB64 = b64.encode(contatoEmail.toLowerCase())
 
         firebase.database().ref(`/mensagens/${UserEmailB64}/${contatoEmailB64}`)
             .push({mensagem, tipo: 'e' })
@@ -128,11 +133,43 @@ export const _SEND_MESSAGE = (mensagem, contatoNome, contatoEmail) => {
                                 firebase.database().ref(`/usuario_conversas/${contatoEmailB64}/${UserEmailB64}/`)
                                 .set({nome: dados.nome, email: userEmail})
 
+                               
                             }
                         )
                     }
                 )
             }
         ) 
+    }
+}
+
+export const _CHAT_USER_FETCH = contatoEmail => {
+
+    const {currentUser} = firebase.auth();
+    const userEmail = currentUser.email.toLowerCase();
+
+    return dispatch => {
+
+        const UserEmailB64 = b64.encode(userEmail)
+        const contatoEmailB64 = b64.encode(contatoEmail.toLowerCase())
+    
+        firebase.database().ref(`/mensagens/${UserEmailB64}/${contatoEmailB64}`)
+            .on("value", snapshot => {
+                dispatch({ type: LIST_CHAT_USER, payload: snapshot.val() })
+            })
+    }
+
+}
+
+export const _CHATS_USER_FETCH = () => {
+    const {currentUser} = firebase.auth();
+
+    return dispatch => {
+        let userEmailB64 = b64.encode(currentUser.email.toLowerCase());
+
+        firebase.database().ref(`/usuario_conversas/${userEmailB64}`)
+            .on("value", snapshot => {
+                dispatch({type: LIST_CHATS_USER, payload: snapshot.val() })
+            })
     }
 }

@@ -1,4 +1,4 @@
-import {CHANGE_ADD_CONTACT_EMAIL, ADD_CONTACT_ERROR, ADD_CONTACT_SUCCESS, MODIFY_MESSAGE, SEND_MESSAGE} from '../actions/types'
+import {CHANGE_ADD_CONTACT_EMAIL, ADD_CONTACT_ERROR, ADD_CONTACT_SUCCESS, MODIFY_MESSAGE, SEND_MESSAGE,CLEAR_TEXT} from '../actions/types'
 
 const INITIAL_STATE = {
     adicionar_contato_email: '',
@@ -18,6 +18,8 @@ export default (state= INITIAL_STATE, action) => {
             return { ...state, adicionar_contato_email:'', cadastro_resultado_inclusao: action.payload}
         case MODIFY_MESSAGE:
             return {...state, mensagem: action.payload}
+        case CLEAR_TEXT:
+            return { ...state, mensagem: ''}
 
         default:
             return state;

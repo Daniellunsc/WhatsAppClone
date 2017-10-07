@@ -33,7 +33,7 @@ class Contatos extends Component {
                 renderTitle: <View><Text style={{fontSize:20, color: '#fff'}}>{contato.nome}</Text><Text style={{color: '#fff'}}>{contato.email}</Text></View>,
                 contatoNome: contato.nome,
                  contatoEmail:contato.email}) }>
-                <View style={{flex:1, padding:20, borderBottomWidth:1, backgroundColor: '#CCC'}}> 
+                <View style={{flex:1, padding:20, borderBottomWidth:1, borderColor: "#ccc"}}> 
                     <Text style={{fontSize:20}}>{contato.nome}</Text>
                     <Text style={{fontSize:18}}>{contato.email}</Text>
                 </View>
