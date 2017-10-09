@@ -46,7 +46,7 @@ export default (state = INITIAL_STATE, action) => {
             }
         case AUTH_USER_SUCESS:
             return {
-                ...state, loadingLogin: false
+                ...state, ...INITIAL_STATE
             }
         case AUTH_USER_FAIL:
             return {
