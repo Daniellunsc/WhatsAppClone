@@ -19,3 +19,4 @@ export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const LIST_CHAT_USER = 'LIST_CHAT_USER';
 export const LIST_CHATS_USER = 'LIST_CHATS_USER';
 export const CLEAR_TEXT = 'CLEAR_TEXT';
+export const FETCH_USER_INFO = 'FETCH_USER_INFO'

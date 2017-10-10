@@ -4,6 +4,7 @@ import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
 import TabBarMenu from './TabBarMenu';
 import Conversas from './Conversas';
 import Contatos from './Contatos';
+import User_Profile from './User_Profile'
 
 export default class Main extends Component {
   state = {
@@ -11,6 +12,7 @@ export default class Main extends Component {
     routes: [
       { key: '1', title: 'Conversas' },
       { key: '2', title: 'Contatos' },
+      { key: '3', title: 'Perfil' },
     ],
   };
 
@@ -21,6 +23,7 @@ export default class Main extends Component {
   _renderScene = SceneMap({
     '1': Conversas,
     '2': Contatos,
+    '3': User_Profile
   });
 
   render() {
